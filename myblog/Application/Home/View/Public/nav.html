@@ -1,0 +1,35 @@
+<div class="header">
+<div class="container"> 	
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                data-target="#example-navbar-collapse">
+            <span class="sr-only">切换导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{:U('Home/Index/index')}" ><span class="glyphicon glyphicon-star-empty"></span>{:C('HOME')}</a>
+    </div>
+    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+        <ul class="nav navbar-nav ">
+        <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    学习分享 <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                   <volist name="cate_name" id="v">
+                       <li><a href="{:U('Home/Cate/index',array('cateName'=>$v['name']))}">{$v['name']}</a></li>
+                   </volist>                   
+                </ul>
+            </li>
+            <li><a href="{:U('Home/Diary/index')}">随笔</a></li>
+            <li><a href="{:U('Home/Comment/index')}">留言</a></li>
+            <li><a href="{:U('Home/About/index')}">关于</a></li>
+        </ul>
+    </div>
+    </div>
+</nav>
+</div>
+</div>

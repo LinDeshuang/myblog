@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+   <include file="./Application/Admin/View/Public/header.html"/>
+
+</head>
+<body>
+<include file="./Application/Admin/View/Public/nav.html"/>
+
+  <div class="container">
+   <div class="panel panel-default panel-main">
+    <div class="panel-heading">
+     <h3 class="panel-title">
+     当前位置：<span class="glyphicon glyphicon-home"></span><a href="{:U('Admin/Adm/index')}">首页</a>>文章管理>文章修改
+     </h3>
+    </div>
+   <div class="panel-body">
+     <form role="form" enctype="multipart/form-data" method="post" action="{:U('Admin/UpdateDiary/Update')}">
+       <div class="form-group">
+         <label for="id">ID</label>
+         <input type="text" class="form-control" id="id" name="id" required="required" value="{$diary_info['id']}">
+       </div>    
+       <div class="form-group">
+         <label for="title">标题</label>
+         <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题" required="required" value="{$diary_info['title']}">
+       </div>
+       <div class="form-group">
+         <label for="content">随笔内容</label>
+         <input type="text" class="form-control" id="content" name="content" placeholder="请输入简介" required="required" value="{$diary_info['content']}">
+       </div>
+       <input type="submit" value="提交" class="btn btn-info" >
+       <input type="reset" value="重置" class="btn btn-warning" >
+     </form>
+
+    </div>
+   </div>
+  </div>
+ 
+ <include file="./Application/Admin/View/Public/footer.html"/>
+</body>
+
+ <script src="__PUBLIC__/bootstrap/ot/jQuery.min.js"></script>
+ <script src="__PUBLIC__/bootstrap/ot/bootstrap.min.js"></script>
+</html> 

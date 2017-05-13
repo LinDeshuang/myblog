@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <include file="./Application/Admin/View/Public/header.html"/>
+</head>
+<body>
+ <include file="./Application/Admin/View/Public/nav.html"/>
+
+  <div class="container">
+   <div class="panel panel-default panel-main">
+    <div class="panel-heading">
+     <h3 class="panel-title">
+     当前位置：<span class="glyphicon glyphicon-home"></span><a href="{:U('Admin/Adm/index')}">首页</a>>文章管理>评论详情/回复
+     </h3>
+    </div>
+   <div class="panel-body">
+     <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+           <span class="glyphicon glyphicon-user"></span>{$comment_info[0]['nickname']}
+           <span class="glyphicon glyphicon-time"></span>{$comment_info[0]['com_time']}
+           <span class="glyphicon glyphicon-envelope"></span>{$comment_info[0]['mail']}
+        </h3>
+      </div>
+       <div class="panel-body">
+           <p>{$comment_info[0]['content']}</p> 
+       </div>
+      </div> 
+     <form role="form" enctype="multipart/form-data" method="post" action="{:U('Admin/AnswerComm/answer')}">
+        <div class="form-group">
+        <label for="id">评论ID</label>
+         <input type="text" name="id" id="id" value="{$comment_info[0]['id']}">
+       </div>
+       
+       <div class="form-group">
+         <label for="answer"><span class="glyphicon glyphicon-pencil"></span>回复：</label>
+		      <textarea class="form-control" rows="3" name="answer" id="answer" required="required" placeholder="填写评论回复"></textarea>
+       </div>
+       <input type="submit" value="提交" class="btn btn-info" >
+       <input type="reset" value="重置" class="btn btn-warning" >
+     </form>
+
+    </div>
+   </div>
+  </div>
+
+ 
+ <include file="./Application/Admin/View/Public/footer.html"/>
+</body>
+ <script src="__PUBLIC__/bootstrap/ot/jQuery.min.js"></script>
+ <script src="__PUBLIC__/bootstrap/ot/bootstrap.min.js"></script>
+</html> 

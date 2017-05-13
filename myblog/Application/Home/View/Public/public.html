@@ -1,0 +1,63 @@
+    <div class="panel panel-default">
+         <div class="panel-heading">
+             <p class="h4"> <span class=" glyphicon glyphicon-tags">&nbsp</span>文章标签</p>
+         </div>
+         <div class="panel-body">
+         <ul class="side-tag-li">
+          <volist name="cate_name" id="vo" empty='没有标签'>
+            <if condition="$vo['id']%6==0">
+             <li class="label label-primary"><a href="{:U('Home/Cate/index',array('cateName'=>$vo['name']))}">{$vo.name}</a></li><span class="badge">{$vo.article_sum}</span>
+            </if>
+            <if condition="$vo['id']%6==1">
+             <li class="label label-info"><a href="{:U('Home/Cate/index',array('cateName'=>$vo['name']))}">{$vo.name}</a></li><span class="badge">{$vo.article_sum}</span>
+            </if>
+            <if condition="$vo['id']%6==2">
+             <li class="label label-success"><a href="{:U('Home/Cate/index',array('cateName'=>$vo['name']))}">{$vo.name}</a></li><span class="badge">{$vo.article_sum}</span>
+            </if>
+            <if condition="$vo['id']%6==3">
+             <li class="label label-warning"><a href="{:U('Home/Cate/index',array('cateName'=>$vo['name']))}">{$vo.name}</a></li><span class="badge">{$vo.article_sum}</span>
+            </if>
+            <if condition="$vo['id']%6==4">
+             <li class="label label-danger"><a href="{:U('Home/Cate/index',array('cateName'=>$vo['name']))}">{$vo.name}</a></li><span class="badge">{$vo.article_sum}</span>
+            </if>
+            <if condition="$vo['id']%6==5">
+             <li class="label label-default"><a href="{:U('Home/Cate/index',array('cateName'=>$vo['name']))}">{$vo.name}</a></li><span class="badge">{$vo.article_sum}</span>
+            </if>
+           </volist>
+
+          </ul>   
+         </div>
+     </div>
+
+
+     <div class="panel panel-default">
+         <div class="panel-heading">
+             <p class="h4"> <span class=" glyphicon glyphicon-fire">&nbsp</span>最热文章</p>
+         </div>
+         <div class="panel-body">
+          <volist name="hot" id="vo">
+            <div class="h5 text-muted text-danger"><a href="{:U('Home/Article/index',array('id'=>$vo['id']))}">[{$vo.category}]{$vo.title}</a></div>
+          </volist>
+           
+        </div>
+     </div>
+
+
+        <div class="panel panel-default">
+         <div class="panel-heading">
+             <p class="h4"> <span class="glyphicon glyphicon-comment"></span>&nbsp最新留言</p>
+         </div>
+         <div class="panel-body">
+          <volist name="comment" id="comment">
+           <div class="well">
+             <div class="h5">
+              <span class="glyphicon glyphicon-user"></span>&nbsp{$comment.nickname}
+              <span class="glyphicon glyphicon-time"></span>&nbsp{$comment.com_time}
+             </div>
+             <a href="{:U('Home/Comment/index')}">{:mb_substr($comment['content'],0,30,'utf-8')}......</a>
+           </div>
+          </volist>
+         </div>
+       </div>
+       
+

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+ <include file="./Application/Admin/View/Public/header.html"/>
+      <script type="text/javascript">
+      	function add(){
+      		var title = $('#title').val();
+      		var content = $('#content').val();
+      		        confirm_=confirm('确认添加？');
+        if(confirm_){
+          $.ajax({
+            url : "{:U('Admin/AddDiary/Add')}",
+            data : {
+              'title' : title,
+              'content' : content
+            },
+            type : 'post',
+            success : function(data){
+                    if(data[0]==1){
+                      alert('添加成功！');
+                    }else {
+                      alert('添加失败！'+data[1]);
+                    }
+            }
+           });
+        }
+        return false;
+      	}
+         function Delete(id){
+        confirm_=confirm('确认删除？');
+        if(confirm_){
+          $.ajax({
+            url : "{:U('Admin/AddDiary/Delete')}",
+            data : {
+              'id' : id
+            },
+            type : 'post',
+            success : function(data){
+                    if(data[0]==1){
+                      alert('删除成功！');
+                      window.location.href = "{:U('Admin/AddDiary/index')}";
+                    }else {
+                      alert('删除失败！');
+                    }
+            }
+           });
+        }
+       }
+      </script>
+</head>
+<body>
+ <include file="./Application/Admin/View/Public/nav.html"/>
+  <div class="container">
+   <div class="panel panel-default panel-main">
+    <div class="panel-heading">
+     <h3 class="panel-title">
+     当前位置：<span class="glyphicon glyphicon-home"></span><a href="{:U('Admin/Adm/index')}">首页</a>>添加随笔
+     </h3>
+    </div>
+   <div class="panel-body">
+
+     <form role="form" onsubmit="return add();">
+       <div class="form-group">
+         <label for="title">随笔标题</label>
+         <input type="text" class="form-control" id="title" name="title" placeholder="请输入随笔标题" required="required">
+       </div>
+       <div class="form-group">
+         <label for="content">随笔内容</label>
+         <input type="text" class="form-control" id="content" name="content" placeholder="请输入内容" required="required">
+       </div>
+       <input type="submit" value="提交" class="btn btn-info" >
+       <input type="reset" value="重置" class="btn btn-warning" >
+     </form>
+    </div>
+   </div>
+      <div class="panel panel-default">
+    <div class="panel-heading">
+     <h3 class="panel-title">
+     当前位置：<span class="glyphicon glyphicon-home"></span><a href="{:U('Admin/Adm/index')}">首页</a>>管理随笔
+     </h3>
+    </div>
+    <div class="panel-body">
+     <table class="table table-hover table-condense text-center">
+       <tr><td>ID</td><td>随笔标题</td><td>随笔内容</td><td>随笔时间</td><td>管理</td></tr>
+       <volist name='diary' id='vo'>
+         <tr>
+           <td>{$vo.id}</td>
+           <td>{$vo.title}</td>
+           <td>{:mb_substr($vo['content'],0,20,'utf-8')}</td>
+           <td>{$vo.create_time}</td>
+           <td><a class="btn btn-danger" href="javascript:Delete({$vo.id});">删除</a>&nbsp
+           <a class="btn btn-warning" href="{:U('Admin/UpdateDiary/index',array('did'=>$vo['id']))}">查看/修改</a></td>
+         </tr>
+       </volist>
+     </table>
+    </div>
+   </div>
+   <div class="page">
+     {$page}
+   </div>
+  </div>
+
+ 
+ <include file="./Application/Admin/View/Public/footer.html"/>
+</body>
+ <script src="__PUBLIC__/bootstrap/ot/jQuery.min.js"></script>
+ <script src="__PUBLIC__/bootstrap/ot/bootstrap.min.js"></script>
+</html>

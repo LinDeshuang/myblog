@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file="./Application/Admin/View/Public/header.html"/>
+       <style type="text/css">
+       	body{
+       		padding: 0px;
+       		margin: 0px;
+       		background-color: #0066CC;
+       	}
+        .container{
+          margin: 100px auto;
+          padding: 10px;
+          width: 400px;
+          min-height:300px; 
+          background-color: white;
+        }
+        input{
+          margin:10px;
+          width: 100%;
+        }
+       </style>
+       
+       <script type="text/javascript">
+       $(function(){
+                  // 验证码生成  
+                  var captcha_img = $('#verifyImg'); 
+                  var verifyimg = captcha_img.attr("src");  
+                  captcha_img.attr('title', '点击刷新');  
+                  captcha_img.click(function(){  
+                      if( verifyimg.indexOf('?')>0){  
+                          $(this).attr("src", verifyimg+'&random='+Math.random());  
+                      }else{  
+                          $(this).attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());  
+                      }  
+                  });
+       });
+         function login(){
+          var name = $('#name').val();
+          var pwd = $('#pwd').val();
+          var verify = $('#verify').val();
+          $.ajax({
+                  url : "{:U(Admin/index)}",
+                  data : {
+                          'name' : name,
+                          'pwd' : pwd,
+                          'verify' : verify
+                         },
+                  type : 'post',
+                  success : function(data){
+                                    if (data[0] == 1) {
+                                    alert('登录成功');  
+                                    window.location.href = "{:U('Adm/index')}";
+                                                    }else if(data[0] == 0){
+                                                       alert('登录失败,密码或帐号错误！');
+                                                        }else {
+                                                          alert('登录失败，验证码错误！');
+                                                        }
+                                          }
+                 });
+          return false;
+         }
+       </script>
+</head>
+<body>
+<div class="container text-center">	
+ <div class="panel panel-default">
+     <div class="panel-heading">
+        <h3 class="panel-title">
+            登录后台管理
+        </h3>
+     </div>
+     <div class="panel-body">
+       <form class="form" role="form" onsubmit="return login();">
+        <input id="name" type="text" name="name" required="required" placeholder="用户名">  
+        <input id="pwd" type="password" name="password" required="required" placeholder="密码">
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6">
+           <input type="text" name="verify" id="verify" placeholder="请输入验证码" required="required">
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-6">
+           <img src="{:U('Admin/Index/verifyShow',array())}" width="100px" height="40px" title="点击刷新" id="verifyImg">
+          </div>
+        </div>
+        <input type="submit" value="登录">
+       </form>
+     </div>
+ </div>
+</div>
+      <script src="__PUBLIC__/bootstrap/ot/jQuery.min.js"></script>
+      <script src="__PUBLIC__/bootstrap/ot/bootstrap.min.js"></script>
+</body>
+</html>

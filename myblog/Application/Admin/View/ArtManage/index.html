@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <include file="./Application/Admin/View/Public/header.html"/>
+     <script type="text/javascript">
+       function Delete(id){
+        confirm_=confirm('确认删除？');
+        if(confirm_){
+          $.ajax({
+            url : "{:U('Admin/ArtManage/deleteArt')}",
+            data : {
+              'id' : id
+            },
+            type : 'post',
+            success : function(data){
+                    if(data[0]==1){
+                      alert('删除成功！');
+                      window.location.href = "{:U('Admin/ArtManage/index')}";
+                    }else {
+                      alert('删除失败！');
+                    }
+            }
+           });
+        }
+       }
+     </script>
+</head>
+<body>
+<include file="./Application/Admin/View/Public/nav.html"/>
+
+  <div class="container">
+     <div class="panel panel-default panel-main">
+  <div class="panel-heading">
+   <h3 class="panel-title">当前位置：<span class="glyphicon glyphicon-home"></span><a href="{:U('Admin/Adm/index')}">首页</a>>文章管理</h3>
+  </div>
+  <div class="panel-body">
+   <div class="well">
+     <table class="table table-hover table-condense text-center">
+       <th ><td colspan="6"><p class="h4">文章主要信息</p></td></th>
+       <tr><td>ID</td><td>文章标题</td><td>作者</td><td>创建日期</td><td>所属分类</td><td>评论</td></tr>
+       <volist name='info' id='vo'>
+         <tr><td>{$vo.id}</td>
+         <td>{$vo.title}</td>
+         <td>{$vo.author}</td>
+         <td>{$vo.create_time}</td>
+         <td>{$vo.category}</td>
+         <td>{$vo.comment_sum}</td>
+         </tr>
+       </volist>
+      </table> 
+     </div>
+     <div class="well">
+       <table class="table table-hover table-condense text-center">
+       <th><td colspan="6"><p class="h4">其他信息及管理</p></td></th>
+       <tr><td>ID</td><td>文章标题</td><td>文章简介</td><td>文章缩略图</td><td>管理</td></tr>
+       <volist name='info' id='vo'>
+         <tr><td>{$vo.id}</td>
+         <td>{$vo.title}</td>
+         <td>{$vo.intro}</td>
+         <td><img style="width: 50px;height: 30px;" src="__PUBLIC__/Uploads/{$vo.img_path}{$vo.img_name}"></td>
+         <td><a class="btn btn-info" id="{$vo.id}" href="{:U('Admin/UpdateArt/index',array('aid'=>$vo['id']))}">修改</a>
+         <a class="btn btn-danger" id="{$vo.id}" href="javascript:Delete({$vo.id});">删除</a></td></tr>
+       </volist>
+     </table> 
+     </div>
+    </div>
+
+   </div>
+    <div class="page">
+       {$page}
+     </div>
+  </div>
+
+ <include file="./Application/Admin/View/Public/footer.html"/>
+       <script src="__PUBLIC__/bootstrap/ot/jQuery.min.js"></script>
+       <script src="__PUBLIC__/bootstrap/ot/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <include file="./Application/Admin/View/Public/header.html"/>
+             <script type="text/javascript">
+             $(function(){
+              $("#oldPwd").focus(function(){
+                $("#tip").html('');
+              })
+             });
+               function update(){
+                                 var name = $("#user").val();
+                                 var oldPwd = $("#oldPwd").val();
+                                 var newPwd = $("#newPwd").val();
+                                 $.ajax({
+                                   url : "{:U('Admin/Adm/updateUserInfo')}",
+                                   data : {
+                                            'name' : name,
+                                            'oldPwd' : oldPwd,
+                                            'newPwd' : newPwd
+                                          },
+                                   type : 'post',
+                                   success : function(data){ 
+                                                            if(data[0]==0){
+                                                              $('#tip').html('密码错误！').css({color:'red'});
+                                                            }else if(data[0]==1){
+                                                              alert('修改失败！'+data[1]);
+                                                            }else{
+                                                              alert('修改成功！');
+                                                            }
+
+                                                           }
+                                       });
+                                 return false;
+
+                                 }
+             </script>
+</head>
+<body>
+ <include file="./Application/Admin/View/Public/nav.html"/>
+
+    <div class="container">
+     <div class="panel panel-default panel-main">
+  <div class="panel-heading">
+   <h3 class="panel-title">当前位置：<span class="glyphicon glyphicon-home"></span><a href="{:U('Admin/Adm/index')}">首页</a>>登录信息修改</h3>
+  </div>
+  <div class="panel-body">
+    <form role="form" onsubmit="return update();">
+       <div class="form-group">
+         <label for="user">用户名：</label>
+         <input class="form-control" type="text"  id="user" name="user" placeholder="请输入名称，长度不得超过30个字符" required="required">
+       </div>
+       <div class="form-group">
+         <label for="oldPwd">旧密码：</label>
+         <input class="form-control" type="password" id="oldPwd" name="oldPwd" placeholder="请输入旧密码，长度不得超过30个字符" required="required"><span id="tip"></span>
+       </div>
+       <div class="form-group">
+         <label for="newPwd">新密码：</label>
+         <input class="form-control" type="password" id="newPwd" name="newPwd" placeholder="请输入新密码，长度不得超过30个字符">
+       </div>
+       <input type="submit" value="提交" class="btn btn-info" >
+       <input type="reset" value="清空" class="btn btn-warning">
+    </form>
+    </div>
+   </div>
+  </div>
+
+<include file="./Application/Admin/View/Public/footer.html"/>
+        <script src="__PUBLIC__/bootstrap/ot/jQuery.min.js"></script>
+       <script src="__PUBLIC__/bootstrap/ot/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <include file="./Application/Admin/View/Public/header.html"/>
+           <script type="text/javascript">
+       function Delete(id){
+        confirm_=confirm('确认删除？');
+        if(confirm_){
+          $.ajax({
+            url : "{:U('Admin/CommManage/deleteComm')}",
+            data : {
+              'id' : id
+            },
+            type : 'post',
+            success : function(data){
+                    if(data[0]==1){
+                      alert('删除成功！');
+                      window.location.href = "{:U('Admin/CommManage/index')}";
+                    }else {
+                      alert('删除失败！');
+                    }
+            }
+           });
+        }
+       }
+              function UpdateStatue(id,statue){
+        confirm_=confirm('确认修改？');
+        if(confirm_){
+          $.ajax({
+            url : "{:U('Admin/CommManage/UpdateStatue')}",
+            data : {
+              'id' : id,
+              'statue' : statue
+            },
+            type : 'post',
+            success : function(data){
+                    if(data[0]==1){
+                      alert('修改成功！');
+                      window.location.href = "{:U('Admin/CommManage/index')}";
+                    }else {
+                      alert('修改失败！');
+                    }
+            }
+           });
+        }
+       }
+     </script>
+</head>
+<body>
+<include file="./Application/Admin/View/Public/nav.html"/>
+
+  <div class="container">
+     <div class="panel panel-default panel-main">
+  <div class="panel-heading">
+   <h3 class="panel-title">当前位置：<span class="glyphicon glyphicon-home"></span><a href="{:U('Admin/Adm/index')}">首页</a>>评论管理</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-hover text-center table-condensed">
+    	<tr><td>ID</td><td>昵称</td><td>邮箱</td><td>留言</td><td>时间</td><td>回复</td><td>状态</td><td>管理</td></tr>
+    	<volist name="info" id="vo">
+    	<tr><td>{$vo.id}</td>
+        <td>{$vo.nickname}</td>
+        <td>{$vo.mail}</td>
+        <td>{:mb_substr($vo['content'],0,10,'utf-8')}...</td>
+        <td>{$vo.com_time}</td>
+        <td>{:mb_substr($vo['answer'],0,10,'utf-8')}...</td>
+        <td>{$vo.statue}</td>
+        <td><a class="btn btn-danger" id="{$vo.id}" href="javascript:Delete({$vo.id});">删除</a>
+        <a class="btn btn-info" id="{$vo.id}" href="javascript:UpdateStatue({$vo.id},{$vo.statue});">修改状态</a>
+        <a class="btn btn-info" id="{$vo.id}" href="{:U('Admin/AnswerComm/index',array('cid'=>$vo['id']))}">查看/回复</a></td></tr>
+    	</volist>
+    </table>
+    </div>
+   </div>
+   <div>{$page}</div>
+  </div>
+
+ <include file="./Application/Admin/View/Public/footer.html"/>
+       <script src="__PUBLIC__/bootstrap/ot/jQuery.min.js"></script>
+       <script src="__PUBLIC__/bootstrap/ot/bootstrap.min.js"></script>
+</body>
+</html>

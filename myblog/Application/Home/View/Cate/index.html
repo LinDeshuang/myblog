@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <include file="./Application/Home/View/Public/header.html"/>
+    <script type="text/javascript" src="__PUBLIC__/js/other.js"></script>
+      <script type="text/javascript">
+                        function Sub(){
+          var nickname = $('#nickname').val();
+          var mail = $('#mail').val();
+          var content = $('#content').val();
+          var verify = $('#verify').val();
+          $.ajax({
+                  url : "{:U('Home/Index/comment')}",
+                  data : {
+                          'nickname' : nickname,
+                          'mail' : mail,
+                          'content' : content,
+                          'verify' : verify
+                         },
+                  type : 'post',
+                  success : function(data){
+                                    if (data[0] == 2) {
+                                    alert('提交失败，验证码错误！');  
+                                                    }else if(data[0] == 1){
+                                                      if(confirm('提交成功！是否前往留言板？')){
+                                                        window.location.href = "{:U('Home/Comment/index')}"; 
+                                                      }else{
+                                                        
+                                                      }                                             
+                                                         }else {                                                          alert(data[1]);
+                                                            }
+                                          }
+                 });
+          return false;
+         }
+      </script>
+   </head>
+   <body>
+   <include file="./Application/Home/View/Public/nav.html"/>
+   <div class="row banner-row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+     <div class="bannerx">
+      <div class="text-center">
+       <p class="h1">SHARE</p>
+       <p class="h3">Date:{$time}</p>
+      </div>
+     </div>
+    </div>
+   </div>
+
+<div class="container">
+  <div class="row">
+   <div class="col-xs-12 col-sm-8 col-md-8">
+    <div class="well">
+      <volist name="cate_info" id="cate_info">
+        <div class="row">
+          <div class="col-xs-2 col-sm-2 col-md-2 thumbnail">
+            <img title="{$cate_info['name']}" src="__PUBLIC__/Uploads/{$cate_info['img_path']}{$cate_info['img_name']}">
+          </div>
+          <div class="col-xs-10 col-sm-10 col-md-10">
+           <p><h1>{$cate_info['name']}</h1><small class="text-muted">（以下都是关于{$cate_info['name']}的文章）</small></p>
+          </div>
+        </div> 
+      </volist>    
+    </div>
+
+     <div class="row">
+       <volist name='info' id='vo'>
+         <div class="col-xs-12 col-sm-4 col-md-4">
+          <div class="well well-pb">
+           <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 thumbnail well-img">
+              <a href="{:U('Home/Article/index',array('id'=>$vo['id']))}">
+                <img  src="__PUBLIC__/Uploads/{$vo.img_path}{$vo.img_name}" title="{$vo.title}">
+              </a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                   
+             <p class="well-title h4 text-center"><span class="text-info">[{$vo.type}]</span><a href="{:U('Home/Article/index',array('id'=>$vo['id']))}">{$vo.title}</a></p>
+                   
+             <p class="well-intro text-muted text-p">{$vo.intro}</p>
+             <div class="well-footer text-center">
+              <span class="glyphicon glyphicon-time"></span>{$vo.create_time}
+              <span class="glyphicon glyphicon-comment"></span>{$vo.comment_sum}
+              <span class="glyphicon glyphicon-tag"></span>{$vo.category}
+               <a class="btn btn-info" href="{:U('Home/Article/index',array('id'=>$vo['id']))}">MORE</a>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+       </volist>
+      </div>
+        <div class="well-page text-center">{$page}</div>
+    </div>  
+    <div class="col-xs-12 col-sm-4 col-md-4">  
+     <include file="./Application/Home/View/Public/public.html"/>
+    </div>
+   </div>
+  </div>
+
+   
+  <include file="./Application/Home/View/Public/comment.html"/>
+  <include file="./Application/Home/View/Public/footer.html"/>
+  <include file="./Application/Home/View/Public/sidebar.html"/>
+       <script src="__PUBLIC__/bootstrap/ot/jquery.min.js"></script>
+       <script src="__PUBLIC__/bootstrap/ot/bootstrap.min.js"></script>
+   </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <include file="./Application/Home/View/Public/header.html"/>
+    <script type="text/javascript" src="__PUBLIC__/js/article.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/other.js"></script>
+     <script type="text/javascript">
+                        function Sub(){
+          var nickname = $('#nickname').val();
+          var mail = $('#mail').val();
+          var content = $('#content').val();
+          var verify = $('#verify').val();
+          $.ajax({
+                  url : "{:U('Home/Index/comment')}",
+                  data : {
+                          'nickname' : nickname,
+                          'mail' : mail,
+                          'content' : content,
+                          'verify' : verify
+                         },
+                  type : 'post',
+                  success : function(data){
+                                    if (data[0] == 2) {
+                                    alert('提交失败，验证码错误！');  
+                                                    }else if(data[0] == 1){
+                                                      if(confirm('提交成功！是否前往留言板？')){
+                                                        window.location.href = "{:U('Home/Comment/index')}"; 
+                                                      }else{
+                                                        
+                                                      }                                             
+                                                         }else {                                                          alert(data[1]);
+                                                            }
+                                          }
+                 });
+          return false;
+         }
+      </script>
+   </head>
+   <body>
+   <include file="./Application/Home/View/Public/nav.html"/>
+   <div class="row banner-row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+     <div class="bannerx">
+      <div class="text-center">
+       <p class="h1">ARTICLE</p>
+       <p class="h3">Date:{$time}</p>
+      </div>
+     </div>    
+    </div>
+   </div>
+
+<div class="container">
+  <div class="row">
+   <div class="col-xs-12 col-sm-8 col-md-8">
+    <div class="content">
+    <volist name="article_info" id="article_info">
+          <div class="article-pannel panel panel-default ">
+         <div class="panel-heading">
+             <p class="h4"> <span class="glyphicon glyphicon-bookmark"></span>&nbsp{$article_info.title}</p>
+         </div>
+         <div class="panel-body">
+           <div class="well">
+             <span class="glyphicon glyphicon-pencil"></span>{$article_info.author}
+              <span class="glyphicon glyphicon-time"></span>{$article_info.create_time}
+              <span class="glyphicon glyphicon-comment"></span>{$article_info.comment_sum}
+              <span class="glyphicon glyphicon-tag"></span>{$article_info.category}
+              <span class="glyphicon glyphicon-eye-open"></span>{$article_info.click_sum}
+           </div> 
+           <div class="text-p article">
+             {:htmlspecialchars_decode($article_info['content'])}
+           </div>  
+         </div>
+     </div>
+    </volist>
+   </div>
+  </div>
+  <div class="col-xs-12 col-sm-4 col-md-4">
+   <div class="info ">   
+   <include file="./Application/Home/View/Public/public.html"/>
+   </div>
+  </div>
+ </div>  
+</div>
+
+   
+  <include file="./Application/Home/View/Public/comment.html"/>
+  <include file="./Application/Home/View/Public/footer.html"/>
+  <include file="./Application/Home/View/Public/sidebar.html"/>
+       <script src="__PUBLIC__/bootstrap/ot/jquery.min.js"></script>
+       <script src="__PUBLIC__/bootstrap/ot/bootstrap.min.js"></script>
+   </body>
+</html>
